@@ -1,0 +1,17 @@
+{
+  "name": "websocket_server_sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ws_server.js",
+  "scripts": {
+    "server": "node ws_server.js",
+    "client": "node client.js",
+    "test": "node ws_server.js & node client.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^8.9.0"
+  }
+}
