@@ -8,10 +8,6 @@ const Client = require('ws').WebSocket;
 
 const ws = new Client(URL);
 
-ws.on('open', function open() {
-  ws.send('Hello');
-});
-
 ws.on('message', function message(data) {
   console.log('received: %s', data);
   const text = '' + data;
@@ -22,4 +18,14 @@ ws.on('message', function message(data) {
   }
 });
 
+ws.on('open', function open() {
+  ws.send('Hello');
+});
 
+
+setTimeout(function() {
+  console.log('---timeout---');
+  //setTimeout(function() {
+  //  console.log('---timeout2---');
+  //}, 100);
+}, 100);
