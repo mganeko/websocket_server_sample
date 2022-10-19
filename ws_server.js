@@ -4,8 +4,8 @@
 //
 
 const PORT = 8000;
-const server = require('ws').Server;
-const wss = new server({port:PORT});
+const Server = require('ws').WebSocketServer;
+const wss = new Server({port:PORT});
 
 wss.on('connection', function connection(ws) {
   //console.log('connected:', ws);

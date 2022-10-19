@@ -4,7 +4,7 @@
 
 const PORT = 8000;
 const URL = 'ws://localhost:' + PORT
-const Client = require('ws');
+const Client = require('ws').WebSocket;
 
 const ws = new Client(URL);
 
