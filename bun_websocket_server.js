@@ -3,11 +3,17 @@
 
 const PORT=8000;
 
+async function sleep(milisec) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve('OK'), milisec);
+  });
+}
+
 Bun.serve({
   port: PORT,
 
   websocket: {
-    message(ws, message) {
+    async message(ws, message) {
       console.log('received: %s', message);
 
       ws.send('Echoback:' + message);
@@ -15,13 +21,15 @@ Bun.serve({
       const text = '' + message;
       if (text === 'QUIT') {
         console.log('QUIT Server');
+        await sleep(100);
         process.exit(0);
+        //ws.close(); <-- bun ERROR
       }
     },
 
-     open(ws) {
-       ws.send('connected!');
-     },
+    open(ws) {
+      ws.send('connected!');
+    },
   },
 
   fetch(req, server) {
