@@ -28,8 +28,13 @@ Bun.serve({
     },
 
     open(ws) {
+      console.log('--open--');
       ws.send('connected!');
     },
+
+    clise(ws) {
+      console.log('--close--');
+    }
   },
 
   fetch(req, server) {
