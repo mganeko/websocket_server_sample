@@ -3,7 +3,8 @@
 //  
 
 const PORT = 8000;
-const URL = 'ws://localhost:' + PORT
+//const URL = 'ws://localhost:' + PORT
+const URL = 'ws://127.0.0.1:' + PORT
 const Client = require('ws').WebSocket;
 
 const ws = new Client(URL);
