@@ -11,30 +11,59 @@ async function sleep(milisec) {
 
 Bun.serve({
   port: PORT,
-
   websocket: {
+    open(ws) {
+      console.log('--open--');
+      console.log('ws:', toString.call(ws));
+
+       //ws.send('connected!'); // ... NG
+
+      /* --- await --
+      await sleep(0); // 100:OK, 0:NG
+      ws.send('connected!');
+      console.log('-sent connected-');
+      ---*/
+
+      // /*-- NEED timeout for Bun ws client
+      setTimeout(() => {
+          //ws.publishText("room", `connected!`);
+          ws.send('connected!');
+          console.log('-sent connected-');
+      }, 1); // 100...OK, 10...OK, 0...NG (close)
+      // -- */
+
+      /* --- NG ---
+      setImmediate(() => {
+        ws.send('connected!');
+      });
+      // NG : close after receive Hello (same as setTimeout 0);
+      ---*/
+      /* --- NG ---
+      process.nextTick(() => {
+        ws.send('connected!')i;
+        // NG : close after receive Hello (same as setTimeout 0);
+      });
+      ---*/
+    },
+
     async message(ws, message) {
       console.log('received: %s', message);
-
       ws.send('Echoback:' + message);
 
       const text = '' + message;
       if (text === 'QUIT') {
         console.log('QUIT Server');
-        await sleep(100);
+        await sleep(10); // wait for ws.send() finish
         process.exit(0);
         //ws.close(); <-- bun ERROR
       }
     },
 
-    open(ws) {
-      console.log('--open--');
-      ws.send('connected!');
+    close(ws) {
+      console.log('--close--');
     },
 
-    clise(ws) {
-      console.log('--close--');
-    }
+    perMessageDeflate: false,
   },
 
   fetch(req, server) {
