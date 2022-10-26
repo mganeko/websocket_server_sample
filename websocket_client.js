@@ -36,4 +36,4 @@ client.on('connect', function(connection) {
 
 const PORT = 8000;
 const URL = 'ws://localhost:' + PORT;
-client.connect(URL, 'echo-protocol');
+client.connect(URL, '');
