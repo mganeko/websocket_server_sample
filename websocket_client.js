@@ -1,5 +1,9 @@
-const WSClient = require('websocket').client;
+//
+// websocket_client.js
+//  WebSocket client for Node.js with websocket module
+//
 
+const WSClient = require('websocket').client;
 const client = new WSClient();
 
 client.on('connectFailed', function(error) {
@@ -8,7 +12,7 @@ client.on('connectFailed', function(error) {
 
 client.on('connect', function(connection) {
   console.log('WebSocket Client Connected');
-  
+
   connection.on('error', function(error) {
     console.log("Connection Error: " + error.toString());
   });
