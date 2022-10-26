@@ -23,11 +23,11 @@ client.on('connect', function(connection) {
   connection.on('message', function(message) {
     //console.log('message:', message);
     if (message.type === 'utf8') {
-       console.log("Received: '" + message.utf8Data + "'");
-       if (message.utf8Data === 'Echoback:Hello') {
-          console.log('got hello');
-          connection.send('QUIT');
-       }
+      console.log("Received: '" + message.utf8Data + "'");
+      if (message.utf8Data === 'Echoback:Hello') {
+        console.log('got hello');
+        connection.send('QUIT');
+      }
     }
   });
 
