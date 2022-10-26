@@ -41,20 +41,25 @@ wss.on('request', function(request) {
     console.log((new Date()) + ' Connection from origin ' + request.origin + ' rejected.');
     return;
   }
-  
-  const connection = request.accept('echo-protocol', request.origin);
+
+  const connection = request.accept('', request.origin);
   console.log((new Date()) + ' Connection accepted.');
+  connection.send('connected!');
+
   connection.on('message', function(message) {
-      if (message.type === 'utf8') {
-          console.log('Received Message: ' + message.utf8Data);
-          connection.sendUTF(message.utf8Data);
+    if (message.type === 'utf8') {
+      console.log('Received Message: ' + message.utf8Data);
+      connection.sendUTF('Echoback:' + message.utf8Data);
+
+      if (message.utf8Data === 'QUIT') {
+        console.log('QUIT Server');
+        process.exit(0);
       }
-      else if (message.type === 'binary') {
-          console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-          connection.sendBytes(message.binaryData);
-      }
+  }
   });
+  
   connection.on('close', function(reasonCode, description) {
-      console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
+    console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
   });
+
 });
