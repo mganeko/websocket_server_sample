@@ -6,6 +6,7 @@ const PORT = 8000;
 //const URL = 'ws://localhost:' + PORT // NG for bun WebSocket Server
 //const URL = 'ws://0.0.0.0:' + PORT // OK
 const URL = 'ws://127.0.0.1:' + PORT // OK
+//const URL = 'ws://[::1]:' + PORT // NG
 const socket = new WebSocket(URL);
 
 // -- Connection opened --
