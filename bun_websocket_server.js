@@ -2,6 +2,7 @@
 //  for bun v0.2.1-
 
 const PORT=8000;
+const HOST='localhost';
 
 async function sleep(milisec) {
   return new Promise((resolve, reject) => {
@@ -10,6 +11,7 @@ async function sleep(milisec) {
 }
 
 Bun.serve({
+  host: HOST,
   port: PORT,
   websocket: {
     open(ws) {

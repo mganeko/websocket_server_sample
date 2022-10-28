@@ -3,8 +3,8 @@
 //  
 
 const PORT = 8000;
-//const URL = 'ws://localhost:' + PORT; OK for Node.js, NG for Bun
-const URL = 'ws://127.0.0.1:' + PORT; // OK
+const URL = 'ws://localhost:' + PORT; // OK for Node.js, OK for Bun
+//const URL = 'ws://127.0.0.1:' + PORT; // OK
 //const URL = 'ws://[::1]:' + PORT; // NG refused
 const Client = require('ws').WebSocket;
 
