@@ -19,10 +19,10 @@ Bun.serve({
       console.log('ws:', toString.call(ws));
 
       // --- FAIL:  cause disconnect after 1st message event --
-       ws.send('connected!'); // ... NG
+       ws.send('connected!');
 
       /* --- OK: await --
-      await sleep(0); // 100:OK, 0:NG
+      await sleep(0); // 100:OK, 0:FAIL
       ws.send('connected!');
       console.log('-sent connected-');
       ---*/
@@ -32,20 +32,20 @@ Bun.serve({
           //ws.publishText("room", `connected!`);
           ws.send('connected!');
           console.log('-sent connected-');
-      }, 1); // 100...OK, 10...OK, 0...NG (close)
+      }, 1); // 100...OK, 10...OK, 0...FAIL (close)
       -- */
 
       /* --- FAIL:  cause disconnect ---
       setImmediate(() => {
         ws.send('connected!');
       });
-      // NG : close after receive Hello (same as setTimeout 0);
+      // FAIL : close after receive Hello (same as setTimeout 0);
       ---*/
 
       /* --- FAIL ---
       process.nextTick(() => {
         ws.send('connected!')i;
-        // NG : close after receive Hello (same as setTimeout 0);
+        // FAIL : close after receive Hello (same as setTimeout 0);
       });
       ---*/
     },
