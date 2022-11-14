@@ -2,8 +2,59 @@
 <html>
 
 <body>
-  <h2> hello </h2>
+  <h2> Chat Server </h2>
+  Topic <input id="topic_text" type="text"></input>
   <button id="connect_button" onclick="connect()">Connect</button>
+  <br />
+  Messge <input id="message_text" type="text"></input>
+  <button id="send_button" onclick="send()">send</button>
+  <br />
+  <textarea id="message_area" rows="10" cols="30"></textarea>
 </body>
+
+<script>
+  const HOST = 'localhost';
+  const PORT = 8000;
+  const wsUrl = `ws://${HOST}:${PORT}/chat`;
+  let ws = null;
+  let topic = '';
+
+  const messageText = document.getElementById('message_text');
+  const messageArea = document.getElementById('message_area')
+
+  function connect() {
+    topic = document.getElementById('topic_text')?.value || "dummy-topic";
+    ws = new WebSocket(wsUrl);
+
+    ws.onopen = (event) => {
+      console.log('---open. enter:', topic);
+      ws.send(JSON.stringify({ type: 'enter', text: topic}));
+    };
+
+    ws.onmessage = (event) => {
+      const data = event.data;
+      console.log('received: %s', data);
+      const text = '' + data;
+
+      messageArea.value += (text + '\n'); 
+    };
+
+    ws.onerror = (err) => {
+      console.error('ERROR:', err);
+    }
+
+    ws.onclose = (event) => {
+      console.error('Close:', event);
+    }
+  }
+
+  function send() {
+    const text = messageText.value;
+    if (text) {
+      console.log('---pub text:', text);
+      ws.send(JSON.stringify({ type: 'pub', topic: topic, text: text}));
+    }
+  }
+</script>
 
 </html>

@@ -20,7 +20,9 @@ Bun.serve({
   port: PORT,
 
   fetch(req, server) {
-    if (req.url === '/chat') {
+    const url = new URL(req.url);
+    if (url.pathname === '/chat') {
+      console.log('/chat - UPGRADE');
       if (server.upgrade(req))
         return;
     }
@@ -31,6 +33,26 @@ Bun.serve({
   websocket: {
     open(ws) {
       console.log('--open--');
+    },
+
+    message(ws, message) {
+      console.log(`received: ${message}`);
+      const data = JSON.parse(message);
+      if (data.type === 'enter') {
+        const topic = data.text;
+        console.log('subscribe:', topic);
+        ws.subscribe(topic);
+      }
+      if (data.type === 'pub') {
+        const topic = data.topic;
+        const text = data.text;
+        console.log('publish:', topic, text);
+        ws.publish(topic, text);
+      }
+    },
+
+    close(ws) {
+      console.log('--close--');
     },
   },
 
