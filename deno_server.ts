@@ -12,7 +12,7 @@ const wss = new WebSocketServer(PORT);
 wss.on("connection", function (ws: WebSocketClient) {
   ws.send('connected!');
 
-  ws.on("message", function (message: string) {
+  ws.on("message", async function (message: string) {
     console.log('received: %s', message);
     ws.send('Echoback:' + message);
 
