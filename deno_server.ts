@@ -2,6 +2,12 @@ import { WebSocketClient, WebSocketServer } from "https://deno.land/x/websocket@
 
 const PORT = 8000;
 
+async function sleep(milisec) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve('OK'), milisec);
+  });
+}
+
 const wss = new WebSocketServer(PORT);
 wss.on("connection", function (ws: WebSocketClient) {
   ws.send('connected!');
@@ -14,7 +20,7 @@ wss.on("connection", function (ws: WebSocketClient) {
     const text = '' + message;
     if (text === 'QUIT') {
       console.log('QUIT Server');
-      //await sleep(10); // wait for ws.send() finish
+      await sleep(10); // wait for ws.send() finish
 
       ws.close();
       Deno.exit(0);
