@@ -1,5 +1,9 @@
+const HOST = 'localhost';
+const PORT = 8000;
+const wsURL = `ws://${HOST}:${PORT}`;
+
 function createWebSocket() {
-  const websocket = new WebSocket("ws://localhost:8000")
+  const websocket = new WebSocket(wsURL);
   websocket.onopen = () => {
     websocket.send('Hello')
   }

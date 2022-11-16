@@ -15,8 +15,9 @@ wss.on("connection", function (ws: WebSocketClient) {
     if (text === 'QUIT') {
       console.log('QUIT Server');
       //await sleep(10); // wait for ws.send() finish
-      process.exit(0);
-      //ws.close(); <-- bun ERROR
+
+      ws.close();
+      Deno.exit(0);
     }
   });
 });
